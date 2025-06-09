@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>car_test.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+    <body onload="prettyPrint()">
+        <h4></h4>
+        <pre class="prettyprint lang-cpp linenums">
+#include "gmock/gmock.h"
+#include "Car.h"
+
+using namespace testing;
+
+class MockCar : public Car {
+public:
+<span style = "background-color:#dfd">	MOCK_METHOD(void, selectCarType, (int types), ());
+	MOCK_METHOD(void, selectEngine, (int types), ());
+	MOCK_METHOD(void, selectbrakeSystem, (int types), ());</span>
+	MOCK_METHOD(void, selectSteeringSystem, (int types), ());
+<span style = "background-color:#dfd">	MOCK_METHOD(void, selectTypeOrTestMode, (int types), ());</span>
+	MOCK_METHOD(int, getSelectStep, (), ());
+	MOCK_METHOD(bool, goBackFirst, (int answer), ());
+	MOCK_METHOD(bool, goPreviousStep, (int answer), ());
+	MOCK_METHOD(bool, isValidCheck, (), ());
+	MOCK_METHOD(void, testProducedCar, (), ());
+	MOCK_METHOD(void, runProducedCar, (), ());
+};
+
+<span style = "background-color:#dfd">TEST(SelectCarType, SelectCarTypeSedan) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectCarType(_));
+	mock.selectCarType(SEDAN);
+}</span>
+/*
+TEST(SelectCarType, SelectCarTypeSuv) {
+	MockCar mock;
+
+	EXPECT_CALL(mock, selectCarType(_));
+	mock.selectCarType(SUV);
+}
+
+TEST(SelectCarType, SelectCarTypeTruck) {
+	MockCar mock;
+
+	EXPECT_CALL(mock, selectCarType(_));
+	mock.selectCarType(TRUCK);
+}
+*/
+<span style = "background-color:#dfd">TEST(SelectEngine, SelectEngineGm) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectEngine(_));
+	mock.selectEngine(GM);
+}</span>
+
+<span style = "background-color:#dfd">TEST(SelectEngine, SelectEngineToyota) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectEngine(_));
+	mock.selectEngine(TOYOTA);
+}</span>
+
+<span style = "background-color:#dfd">TEST(SelectEngine, SelectEngineWia) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectEngine(_));
+	mock.selectEngine(WIA);
+}</span>
+
+<span style = "background-color:#dfd">TEST(SelectbrakeSystem, SelectbrakeSystemMando) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectbrakeSystem(_));
+	mock.selectbrakeSystem(MANDO);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectSteeringSystem, SelectbrakeSystemBosch) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectbrakeSystem(_));
+	mock.selectbrakeSystem(BOSCH_S);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeCarType) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectTypeOrTestMode(_));
+	mock.selectTypeOrTestMode(0);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeCarTypeValue) {
+	Car::getInstance().selectTypeOrTestMode(CarType_Q);
+	int ret = Car::getInstance().getSelectStep();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(Engine_Q, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeEngine) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectTypeOrTestMode(_));
+	mock.selectTypeOrTestMode(CarType_Q);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeEngineValue) {
+	Car::getInstance().selectTypeOrTestMode(Engine_Q);
+	int ret = Car::getInstance().getSelectStep();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(brakeSystem_Q, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeBreak) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectTypeOrTestMode(_));
+	mock.selectTypeOrTestMode(brakeSystem_Q);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeBreakValue) {
+	Car::getInstance().selectTypeOrTestMode(brakeSystem_Q);
+	int ret = Car::getInstance().getSelectStep();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(SteeringSystem_Q, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeSteer) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectTypeOrTestMode(_));
+	mock.selectTypeOrTestMode(SteeringSystem_Q);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeSteerValue) {
+	Car::getInstance().selectTypeOrTestMode(SteeringSystem_Q);
+	int ret = Car::getInstance().getSelectStep();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(Run_Test, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeTest) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectTypeOrTestMode(_));
+	mock.selectTypeOrTestMode(Run_Test);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeTestValue) {
+	Car::getInstance().selectTypeOrTestMode(1);
+	int ret = Car::getInstance().getSelectStep();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(Run_Test, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeTest2) {
+	MockCar mock;</span>
+
+<span style = "background-color:#dfd">	EXPECT_CALL(mock, selectTypeOrTestMode(_));
+	mock.selectTypeOrTestMode(Run_Test);
+}</span>
+
+<span style = "background-color:#dfd">TEST(selectTypeOrTestMode, selectTypeOrTestModeTestValue2) {
+	Car::getInstance().selectTypeOrTestMode(2);
+	int ret = Car::getInstance().getSelectStep();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(Run_Test, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(goBackFirst, goBackFirstValue) {
+	Car::getInstance().setSelectStep(Run_Test);
+	Car::getInstance().goBackFirst(0);
+	int ret = Car::getInstance().getSelectStep();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(CarType_Q, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(goPreviousStep, goPreviousStepTrue) {
+	Car::getInstance().setSelectStep(Engine_Q);
+	Car::getInstance().goPreviousStep(0);
+	int ret = Car::getInstance().getSelectStep();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(CarType_Q, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(goPreviousStep, goPreviousStepFalse) {
+	Car::getInstance().setSelectStep(Engine_Q);
+	Car::getInstance().goPreviousStep(1);
+	int ret = Car::getInstance().getSelectStep();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(Engine_Q, ret);
+}</span>
+
+
+<span style = "background-color:#dfd">TEST(testProducedCar, testProducedCarTruckWia) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(TRUCK);
+	Car::getInstance().setSelectStep(Engine_Q);
+	Car::getInstance().selectEngine(WIA);</span>
+
+<span style = "background-color:#dfd">	Car::getInstance().testProducedCar();
+}</span>
+
+<span style = "background-color:#dfd">TEST(testProducedCar, testProducedCarTruckMando) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(TRUCK);
+	Car::getInstance().setSelectStep(Engine_Q);
+	Car::getInstance().selectEngine(GM);
+	Car::getInstance().setSelectStep(brakeSystem_Q);
+	Car::getInstance().selectbrakeSystem(MANDO);</span>
+
+<span style = "background-color:#dfd">	Car::getInstance().testProducedCar();
+}</span>
+
+<span style = "background-color:#dfd">TEST(testProducedCar, testProducedCarBoschBosch) {
+	Car::getInstance().setSelectStep(brakeSystem_Q);
+	Car::getInstance().selectbrakeSystem(BOSCH_B);
+	Car::getInstance().setSelectStep(SteeringSystem_Q);
+	Car::getInstance().selectSteeringSystem(MOBIS);</span>
+
+<span style = "background-color:#dfd">	Car::getInstance().testProducedCar();
+}</span>
+
+<span style = "background-color:#dfd">TEST(runProducedCar, runProducedCarSedanContinental) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(SEDAN);
+	Car::getInstance().setSelectStep(brakeSystem_Q);
+	Car::getInstance().selectbrakeSystem(CONTINENTAL);</span>
+
+<span style = "background-color:#dfd">	Car::getInstance().runProducedCar();
+}</span>
+
+<span style = "background-color:#dfd">TEST(runProducedCar, runProducedCarTruckWia) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(TRUCK);
+	Car::getInstance().setSelectStep(Engine_Q);
+	Car::getInstance().selectEngine(4);</span>
+
+<span style = "background-color:#dfd">	Car::getInstance().runProducedCar();
+}</span>
+
+<span style = "background-color:#dfd">TEST(testProducedCar, isValidCheckSedanContinental) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(SEDAN);
+	Car::getInstance().setSelectStep(brakeSystem_Q);
+	Car::getInstance().selectbrakeSystem(CONTINENTAL);</span>
+
+<span style = "background-color:#dfd">	Car::getInstance().testProducedCar();
+}</span>
+
+<span style = "background-color:#dfd">TEST(testProducedCar, isValidCheckSuvToyota) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(SUV);
+	Car::getInstance().setSelectStep(Engine_Q);
+	Car::getInstance().selectEngine(TOYOTA);</span>
+
+<span style = "background-color:#dfd">	Car::getInstance().testProducedCar();
+}</span>
+
+<span style = "background-color:#dfd">TEST(isValidCheck, isValidCheckSedanContinental) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(SEDAN);
+	Car::getInstance().setSelectStep(brakeSystem_Q);
+	Car::getInstance().selectbrakeSystem(CONTINENTAL);</span>
+
+<span style = "background-color:#dfd">	bool ret = Car::getInstance().isValidCheck();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(false, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(isValidCheck, isValidCheckSuvToyota) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(SUV);
+	Car::getInstance().setSelectStep(Engine_Q);
+	Car::getInstance().selectEngine(TOYOTA);</span>
+
+<span style = "background-color:#dfd">	bool ret = Car::getInstance().isValidCheck();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(false, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(isValidCheck, isValidCheckTruckWia) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(TRUCK);
+	Car::getInstance().setSelectStep(Engine_Q);
+	Car::getInstance().selectEngine(WIA);</span>
+
+<span style = "background-color:#dfd">	bool ret = Car::getInstance().isValidCheck();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(false, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(isValidCheck, isValidCheckTruckMando) {
+	Car::getInstance().setSelectStep(CarType_Q);
+	Car::getInstance().selectCarType(TRUCK);
+	Car::getInstance().setSelectStep(Engine_Q);
+	Car::getInstance().selectEngine(GM);
+	Car::getInstance().setSelectStep(brakeSystem_Q);
+	Car::getInstance().selectbrakeSystem(MANDO);</span>
+
+<span style = "background-color:#dfd">	bool ret = Car::getInstance().isValidCheck();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(false, ret);
+}</span>
+
+<span style = "background-color:#dfd">TEST(isValidCheck, isValidCheckBoschBosch) {
+	Car::getInstance().setSelectStep(brakeSystem_Q);
+	Car::getInstance().selectbrakeSystem(BOSCH_B);
+	Car::getInstance().setSelectStep(SteeringSystem_Q);
+	Car::getInstance().selectSteeringSystem(MOBIS);</span>
+
+<span style = "background-color:#dfd">	bool ret = Car::getInstance().isValidCheck();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(false, ret);
+}</span></pre>
+        <hr />
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th align="center">
+                        <small>Generated by</small>
+                        <a href="https://github.com/OpenCppCoverage/OpenCppCoverage/releases">
+                            <strong>OpenCppCoverage (Version: 0.9.9.0)</strong>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>

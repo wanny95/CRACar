@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>Car.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+    <body onload="prettyPrint()">
+        <h4></h4>
+        <pre class="prettyprint lang-cpp linenums">
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include "Car.h"
+#include "Utils.h"
+
+<span style = "background-color:#dfd">Car::Car() : selectStep(CarType_Q)
+{</span>
+	/*
+	carModules.clear();
+
+	CarModule* moduleType = new CarModule("Â÷·® Å¸ÀÔ");
+	carModules.push_back(moduleType);
+
+	CarModule* moduleEngine = new CarModule("¿£Áø");
+	carModules.push_back(moduleEngine);
+
+	CarModule* moduleBreak = new CarModule("Á¦µ¿ÀåÄ¡");
+	carModules.push_back(moduleBreak);
+
+	CarModule* moduleSteer = new CarModule("Á¶ÇâÀåÄ¡");
+	carModules.push_back(moduleSteer);
+	*/
+<span style = "background-color:#dfd">}</span>
+
+Car::~Car()
+<span style = "background-color:#dfd">{</span>
+	/*
+	for (auto carModule : carModules) {
+		delete carModule;
+	}
+
+	carModules.clear();
+	*/
+<span style = "background-color:#dfd">}</span>
+
+Car&amp; Car::getInstance()
+<span style = "background-color:#dfd">{
+	static Car instance;
+	return instance;
+}</span>
+
+void Car::selectTypeOrTestMode(int answer)
+<span style = "background-color:#dfd">{
+	if (selectStep == CarType_Q) {
+		selectCarType(answer);
+		delay(MENU_SELECT_DELAY);
+		selectStep = Engine_Q;
+	}
+	else if (selectStep == Engine_Q) {
+		selectEngine(answer);
+		delay(MENU_SELECT_DELAY);
+		selectStep = brakeSystem_Q;
+	}
+	else if (selectStep == brakeSystem_Q) {
+		selectbrakeSystem(answer);
+		delay(MENU_SELECT_DELAY);
+		selectStep = SteeringSystem_Q;
+	}
+	else if (selectStep == SteeringSystem_Q) {
+		selectSteeringSystem(answer);
+		delay(MENU_SELECT_DELAY);
+		selectStep = Run_Test;
+	}
+	else if (selectStep == Run_Test &amp;&amp; answer == 1) {
+		runProducedCar();
+		delay(TEST_AFTER_DELAY);
+	}
+	else if (selectStep == Run_Test &amp;&amp; answer == 2) {
+		printf("Test...\n");
+		delay(TEST_BEFORE_DELAY);
+		testProducedCar();
+		delay(TEST_AFTER_DELAY);</span>
+	}
+<span style = "background-color:#dfd">}</span>
+
+void Car::selectCarType(int types)
+<span style = "background-color:#dfd">{
+	carModuleStack[CarType_Q] = types;
+	if (types == 1) printf("Â÷·® Å¸ÀÔÀ¸·Î SedanÀ» ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+	if (types == 2) printf("Â÷·® Å¸ÀÔÀ¸·Î SUVÀ» ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+	if (types == 3) printf("Â÷·® Å¸ÀÔÀ¸·Î TruckÀ» ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+}</span>
+
+void Car::selectEngine(int types)
+<span style = "background-color:#dfd">{
+	carModuleStack[Engine_Q] = types;
+	if (types == 1) printf("GM ¿£ÁøÀ» ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+	if (types == 2) printf("TOYOTA ¿£ÁøÀ» ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+	if (types == 3) printf("WIA ¿£ÁøÀ» ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+}</span>
+
+void Car::selectbrakeSystem(int types)
+<span style = "background-color:#dfd">{
+	carModuleStack[brakeSystem_Q] = types;
+	if (types == 1) printf("MANDO Á¦µ¿ÀåÄ¡¸¦ ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+	if (types == 2) printf("CONTINENTAL Á¦µ¿ÀåÄ¡¸¦ ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+	if (types == 3) printf("BOSCH Á¦µ¿ÀåÄ¡¸¦ ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+}</span>
+
+void Car::selectSteeringSystem(int types)
+<span style = "background-color:#dfd">{
+	carModuleStack[SteeringSystem_Q] = types;
+	if (types == 1) printf("BOSCH Á¶ÇâÀåÄ¡¸¦ ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+	if (types == 2) printf("MOBIS Á¶ÇâÀåÄ¡¸¦ ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
+}</span>
+
+bool Car::goBackFirst(int answer)
+<span style = "background-color:#dfd">{
+	if (answer == 0 &amp;&amp; selectStep == Run_Test) {
+		selectStep = CarType_Q;</span>
+		true;
+	}
+<span style = "background-color:#dfd">	return false;
+}</span>
+
+bool Car::goPreviousStep(int answer)
+<span style = "background-color:#dfd">{
+	if (answer == 0 &amp;&amp; selectStep &gt;= 1) {
+		selectStep -= 1;
+		return true;</span>
+	}
+<span style = "background-color:#dfd">	return false;
+}</span>
+
+<span style = "background-color:#dfd">int Car::isValidCheck() {
+	if (carModuleStack[CarType_Q] == SEDAN &amp;&amp; carModuleStack[brakeSystem_Q] == CONTINENTAL) {
+		return false;</span>
+<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#dfd">	else if (carModuleStack[CarType_Q] == SUV &amp;&amp; carModuleStack[Engine_Q] == TOYOTA) {
+		return false;</span>
+<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#dfd">	else if (carModuleStack[CarType_Q] == TRUCK &amp;&amp; carModuleStack[Engine_Q] == WIA) {
+		return false;</span>
+<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#dfd">	else if (carModuleStack[CarType_Q] == TRUCK &amp;&amp; carModuleStack[brakeSystem_Q] == MANDO) {
+		return false;</span>
+<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#dfd">	else if (carModuleStack[brakeSystem_Q] == BOSCH_B &amp;&amp; carModuleStack[SteeringSystem_Q] != BOSCH_S) {
+		return false;</span>
+	}
+<span style = "background-color:#dfd">	return true;
+}</span>
+
+<span style = "background-color:#dfd">void Car::runProducedCar() {
+	if (isValidCheck() == false) {
+		printf("ÀÚµ¿Â÷°¡ µ¿ÀÛµÇÁö ¾Ê½À´Ï´Ù\n");
+	}</span>
+	else {
+<span style = "background-color:#dfd">		if (carModuleStack[Engine_Q] == 4) {
+			printf("¿£ÁøÀÌ °íÀå³ªÀÖ½À´Ï´Ù.\n");
+			printf("ÀÚµ¿Â÷°¡ ¿òÁ÷ÀÌÁö ¾Ê½À´Ï´Ù.\n");
+		}</span>
+		else {
+<span style = "background-color:#dfd">			if (carModuleStack[CarType_Q] == 1) printf("Car Type : Sedan\n");
+			if (carModuleStack[CarType_Q] == 2) printf("Car Type : SUV\n");
+			if (carModuleStack[CarType_Q] == 3) printf("Car Type : Truck\n");
+			if (carModuleStack[Engine_Q] == 1) printf("Engine : GM\n");
+			if (carModuleStack[Engine_Q] == 2) printf("Engine : TOYOTA\n");
+			if (carModuleStack[Engine_Q] == 3) printf("Engine : WIA\n");
+			if (carModuleStack[brakeSystem_Q] == 1) printf("Brake System : Mando");
+			if (carModuleStack[brakeSystem_Q] == 2) printf("Brake System : Continental\n");
+			if (carModuleStack[brakeSystem_Q] == 3) printf("Brake System : Bosch\n");
+			if (carModuleStack[SteeringSystem_Q] == 1) printf("SteeringSystem : Bosch\n");
+			if (carModuleStack[SteeringSystem_Q] == 2) printf("SteeringSystem : Mobis\n");</span>
+
+<span style = "background-color:#dfd">			printf("ÀÚµ¿Â÷°¡ µ¿ÀÛµË´Ï´Ù.\n");</span>
+		}
+	}
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">void Car::testProducedCar() {
+	if (carModuleStack[CarType_Q] == SEDAN &amp;&amp; carModuleStack[brakeSystem_Q] == CONTINENTAL) {
+		printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
+		printf("Sedan¿¡´Â ContinentalÁ¦µ¿ÀåÄ¡ »ç¿ë ºÒ°¡\n");
+	}
+	else if (carModuleStack[CarType_Q] == SUV &amp;&amp; carModuleStack[Engine_Q] == TOYOTA) {
+		printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
+		printf("SUV¿¡´Â TOYOTA¿£Áø »ç¿ë ºÒ°¡\n");
+	}
+	else if (carModuleStack[CarType_Q] == TRUCK &amp;&amp; carModuleStack[Engine_Q] == WIA) {
+		printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
+		printf("Truck¿¡´Â WIA¿£Áø »ç¿ë ºÒ°¡\n");
+	}
+	else if (carModuleStack[CarType_Q] == TRUCK &amp;&amp; carModuleStack[brakeSystem_Q] == MANDO) {
+		printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
+		printf("Truck¿¡´Â MandoÁ¦µ¿ÀåÄ¡ »ç¿ë ºÒ°¡\n");
+	}
+	else if (carModuleStack[brakeSystem_Q] == BOSCH_B &amp;&amp; carModuleStack[SteeringSystem_Q] != BOSCH_S) {
+		printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
+		printf("Bosch Á¦µ¿ÀåÄ¡¿¡´Â BoschÁ¶ÇâÀåÄ¡ ÀÌ¿Ü »ç¿ë ºÒ°¡\n");
+	}</span>
+	else {
+<span style = "background-color:#dfd">		printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : PASS\n");</span>
+	}
+<span style = "background-color:#dfd">}</span></pre>
+        <hr />
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th align="center">
+                        <small>Generated by</small>
+                        <a href="https://github.com/OpenCppCoverage/OpenCppCoverage/releases">
+                            <strong>OpenCppCoverage (Version: 0.9.9.0)</strong>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>
