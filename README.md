@@ -7,3 +7,5 @@
 |D3|X|\
 |D4|O|\
 |D5|O|
+
+<img src="coverage.png">
