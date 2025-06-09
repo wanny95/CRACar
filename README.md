@@ -7,4 +7,7 @@
 |D4|O|\
 |D5|O|
 
+Mission1 : Method Level 추상화를 포함합니다.
+Mission2 : Mission 1, Test Case, Singleton pattern, Code Coverage
+
 <img src="coverage.png">
